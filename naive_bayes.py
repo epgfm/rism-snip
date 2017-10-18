@@ -34,8 +34,6 @@ corpus_train = [
     ("Putain de Phillipe", 1)
 ]
 
-
-
 corpus_test = [
     ("Des préservatifs je suis tout le temps dedans jamais autours", 1),
     ("J'avance pas sur mon projet", 0),
@@ -47,10 +45,14 @@ corpus_test = [
     ("Putain cet example me soule.", 1),
 ]
 
+
 def tokenize_text(text):
+    ''' This is really basic shit: you should implement a smarter tokenizer. '''
     return text.split()
 
+
 def build_dict(corpus):
+    ''' create a dict where keys are words and values are indices '''
     d = {}
     i = 0
     for text, label in corpus:
@@ -62,6 +64,12 @@ def build_dict(corpus):
 
 
 def make_BoW(text, word_dict):
+    '''
+    Turns a text into a Bag of Words for the corresponding word_dict.
+    A BoW is an array [0, 0, 1, 0, 0, 0, 1] where the value is 1 if the
+    corresponding word is in the text.
+
+    '''
     BoW = [0 for i in range(len(word_dict))]
     for w in tokenize_text(text):
         if w in word_dict:
@@ -69,10 +77,15 @@ def make_BoW(text, word_dict):
     return BoW
 
 def make_BoWs(corpus, word_dict):
+    '''
+    Convert the text samples in the corpus into a list of Bag of Words
+    '''
     BoWs = []
     for text, label in corpus:
         BoWs.append(make_BoW(text, word_dict))
     return BoWs
+
+
 
 if __name__ == '__main__':
     word_dict = build_dict(corpus_train)
